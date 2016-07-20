@@ -40,7 +40,7 @@ CREATE TABLE `linkshells` (
 
 LOCK TABLES `linkshells` WRITE;
 /*!40000 ALTER TABLE `linkshells` DISABLE KEYS */;
-INSERT INTO `linkshells` VALUES (1,'IguanasRus',61616,'Dracon','Howdy all time to kill some orcs.',1447882558,0);
+INSERT INTO `linkshells` VALUES (1,'IguanasRus',61616,'Nyo','Get Swfty',1464748712,0);
 /*!40000 ALTER TABLE `linkshells` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-05-26 23:10:06
+-- Dump completed on 2016-07-19 21:12:57
