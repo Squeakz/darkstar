@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.15, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dspdb
 -- ------------------------------------------------------
--- Server version	5.7.12-log
+-- Server version	5.7.15-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -42,7 +42,7 @@ CREATE TABLE `char_effects` (
 
 LOCK TABLES `char_effects` WRITE;
 /*!40000 ALTER TABLE `char_effects` DISABLE KEYS */;
-INSERT INTO `char_effects` VALUES (21829,794,0,0,10,0,0,0,0),(21829,249,249,50,0,21075,0,12534,0),(21828,253,253,0,0,18546,0,0,0),(21829,253,253,0,0,18126,0,0,0),(21829,795,0,35,5,0,0,0,0);
+INSERT INTO `char_effects` VALUES (21829,794,0,0,10,0,0,0,0),(21829,249,249,50,0,21075,0,12534,0),(21828,253,253,0,0,14898,0,0,0),(21829,253,253,0,0,18126,0,0,0),(21829,795,0,35,5,0,0,0,0);
 /*!40000 ALTER TABLE `char_effects` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -55,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-15 18:58:19
+-- Dump completed on 2016-10-10 17:22:28

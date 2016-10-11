@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.15, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dspdb
 -- ------------------------------------------------------
--- Server version	5.7.12-log
+-- Server version	5.7.15-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -43,7 +43,7 @@ CREATE TABLE `char_profile` (
 
 LOCK TABLES `char_profile` WRITE;
 /*!40000 ALTER TABLE `char_profile` DISABLE KEYS */;
-INSERT INTO `char_profile` VALUES (21828,150,1,1,1,2550,2550,30,0,2960),(21829,4000,2,1,1,1030,1000,0,0,1210),(21830,0,1,1,1,0,0,0,0,0);
+INSERT INTO `char_profile` VALUES (21828,650,1,1,2,2550,2550,30,0,2960),(21829,4000,2,1,1,1030,1000,0,0,1210),(21830,0,1,1,1,0,0,0,0,0);
 /*!40000 ALTER TABLE `char_profile` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-08-15 18:58:20
+-- Dump completed on 2016-10-10 17:22:29
