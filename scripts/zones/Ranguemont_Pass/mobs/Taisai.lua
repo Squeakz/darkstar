@@ -35,6 +35,13 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
+end;
+
+-----------------------------------
+-- onMobDespawn
+-----------------------------------
+
+function onMobDespawn(mob)
 
     local Taisai = mob:getID();
     local Taisaijin = 17457216;

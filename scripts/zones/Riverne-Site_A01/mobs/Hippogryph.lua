@@ -46,6 +46,13 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
+end;
+
+-----------------------------------
+-- onMobDespawn
+-----------------------------------
+
+function onMobDespawn(mob)
 
     local Hippogryph = mob:getID();
     local Heliodromos_PH_Table =

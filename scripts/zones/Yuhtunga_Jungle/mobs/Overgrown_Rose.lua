@@ -33,6 +33,13 @@ end;
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
+end;
+
+-----------------------------------
+-- onMobDespawn
+-----------------------------------
+
+function onMobDespawn(mob)
 
     local Overgrown_Rose = mob:getID();
     local Rose_Garden = 17281357;

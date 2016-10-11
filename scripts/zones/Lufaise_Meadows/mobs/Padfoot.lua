@@ -61,10 +61,17 @@ function onMobSpawn(mob)
 end;
 
 -----------------------------------
--- OnMobDeath Action
+-- onMobDeath
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
+end;
+
+-----------------------------------
+-- OnMobDespawn
+-----------------------------------
+
+function onMobDespawn(mob)
 
     local PadfootClone =
     {

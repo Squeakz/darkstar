@@ -15,7 +15,7 @@ require("scripts/globals/magicburst");
 
 
 -- params contains: ftp100, ftp200, ftp300, str_wsc, dex_wsc, vit_wsc, int_wsc, mnd_wsc, canCrit, crit100, crit200, crit300, acc100, acc200, acc300, ignoresDef, ignore100, ignore200, ignore300, atkmulti
-function doPhysicalWeaponskill(attacker, target, wsID, params, tp, primary)
+function doPhysicalWeaponskill(attacker, target, wsID, tp, primary, action, taChar, params)
 
     local criticalHit = false;
     local bonusTP = params.bonusTP or 0
@@ -49,11 +49,6 @@ function doPhysicalWeaponskill(attacker, target, wsID, params, tp, primary)
     local ignoredDef = 0;
     if (params.ignoresDef == not nil and params.ignoresDef == true) then
         ignoredDef = calculatedIgnoredDef(tp, target:getStat(MOD_DEF), params.ignored100, params.ignored200, params.ignored300);
-    end
-
-    local taChar = nil
-    if (primary and attacker:hasStatusEffect(EFFECT_TRICK_ATTACK)) then
-        taChar = attacker:getTrickAttackChar(target)
     end
 
     -- get cratio min and max
@@ -223,7 +218,7 @@ function doPhysicalWeaponskill(attacker, target, wsID, params, tp, primary)
     attacker:delStatusEffectSilent(EFFECT_BUILDING_FLOURISH);
     finaldmg = finaldmg * WEAPON_SKILL_POWER
     if tpHitsLanded + extraHitsLanded > 0 then
-        finaldmg = takeWeaponskillDamage(target, attacker, params, finaldmg, SLOT_MAIN, tpHitsLanded, (extraHitsLanded * 10) + bonusTP, taChar)
+        finaldmg = takeWeaponskillDamage(target, attacker, params, primary, finaldmg, SLOT_MAIN, tpHitsLanded, (extraHitsLanded * 10) + bonusTP, taChar)
     end
     return finaldmg, criticalHit, tpHitsLanded, extraHitsLanded;
 end;
@@ -231,7 +226,7 @@ end;
 -- params: ftp100, ftp200, ftp300, wsc_str, wsc_dex, wsc_vit, wsc_agi, wsc_int, wsc_mnd, wsc_chr,
 --         ele (ELE_FIRE), skill (SKILL_STF), includemab = true
 
-function doMagicWeaponskill(attacker, target, wsID, params, tp, primary)
+function doMagicWeaponskill(attacker, target, wsID, tp, primary, action, params)
 
     local bonusTP = params.bonusTP or 0
     local bonusfTP, bonusacc = handleWSGorgetBelt(attacker);
@@ -257,7 +252,7 @@ function doMagicWeaponskill(attacker, target, wsID, params, tp, primary)
         dmg = dmg * (100 + attacker:getMod(MOD_WEAPONSKILL_DAMAGE_BASE + wsID))/100
     end
     dmg = dmg * WEAPON_SKILL_POWER
-    dmg = takeWeaponskillDamage(target, attacker, params, dmg, SLOT_MAIN, 1, bonusTP, nil)
+    dmg = takeWeaponskillDamage(target, attacker, params, primary, dmg, SLOT_MAIN, 1, bonusTP, nil)
     return dmg, false, 1, 0;
 end
 
@@ -399,14 +394,16 @@ function getRangedHitRate(attacker,target,capHitRate,bonus)
 end;
 
 function fTP(tp,ftp1,ftp2,ftp3)
-    if tp < 1000 then tp = 1000 end
-    if (tp>=1000 and tp<2000) then
+    if (tp < 1000) then
+        tp = 1000;
+    end
+    if (tp >= 1000 and tp < 2000) then
         return ftp1 + ( ((ftp2-ftp1)/1000) * (tp-1000));
-    elseif (tp>=2000 and tp<=3000) then
+    elseif (tp >= 2000 and tp <= 3000) then
         -- generate a straight line between ftp2 and ftp3 and find point @ tp
         return ftp2 + ( ((ftp3-ftp2)/1000) * (tp-2000));
     else
-        print("fTP error: TP value is not between 100-300!");
+        print("fTP error: TP value is not between 1000-3000!");
     end
     return 1; -- no ftp mod
 end;
@@ -455,7 +452,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef)
         pdifmax = cratio + 0.3;
     elseif (cratio < 1.5) then
         pdifmax = (cratio * 0.25) + cratio;
-    elseif (cratio < 1.5) then
+    elseif (cratio < 2.625) then
         pdifmax = cratio + 0.375;
     else
         pdifmax = 3;
@@ -492,7 +489,7 @@ function cMeleeRatio(attacker, defender, params, ignoredDef)
         pdifmax = cratio + 0.3;
     elseif (cratio < 1.5) then
         pdifmax = (cratio * 0.25) + cratio;
-    elseif (cratio < 1.5) then
+    elseif (cratio < 2.625) then
         pdifmax = cratio + 0.375;
     else
         pdifmax = 3;
@@ -778,7 +775,7 @@ end;
 
     finaldmg = finaldmg * WEAPON_SKILL_POWER
     if tpHitsLanded + extraHitsLanded > 0 then
-        finaldmg = takeWeaponskillDamage(target, attacker, params, finaldmg, SLOT_RANGED, tpHitsLanded, (extraHitsLanded * 10) + bonusTP, nil)
+        finaldmg = takeWeaponskillDamage(target, attacker, params, primary, finaldmg, SLOT_RANGED, tpHitsLanded, (extraHitsLanded * 10) + bonusTP, nil)
     end
     return finaldmg, crit, tpHitsLanded, extraHitsLanded;
 end;
@@ -881,9 +878,9 @@ function getFlourishAnimation(skill)
     end    
 end
 
-function takeWeaponskillDamage(defender, attacker, params, finaldmg, slot, tpHitsLanded, bonusTP, taChar)
+function takeWeaponskillDamage(defender, attacker, params, primary, finaldmg, slot, tpHitsLanded, bonusTP, taChar)
     local targetTPMult = params.targetTPMult or 1
-    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, slot, tpHitsLanded, bonusTP, targetTPMult)
+    finaldmg = defender:takeWeaponskillDamage(attacker, finaldmg, slot, primary, tpHitsLanded, bonusTP, targetTPMult)
     local enmityEntity = taChar or attacker;
     if (params.overrideCE and params.overrideVE) then
         defender:addEnmity(enmityEntity, params.overrideCE, params.overrideVE)
